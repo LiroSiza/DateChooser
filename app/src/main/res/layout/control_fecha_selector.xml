@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
+    android:gravity="center_horizontal"
     android:padding="16dp"
     android:background="@color/white">
 
@@ -14,7 +14,7 @@
         android:text="Fecha seleccionada"
         android:textSize="22sp"
         android:fontFamily="@font/ibm_plexdans_medium"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="58dp"
         android:gravity="center"
     />
 

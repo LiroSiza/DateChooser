@@ -1,6 +1,9 @@
 package com.example.datechooser;
 
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,9 +25,11 @@ public class FechaSelector extends LinearLayout {
     private TextView textViewFecha;  // Referencia al TextView que muestra la fecha seleccionada
     private OnFechaChangeListener fechaChangeListener;  // Listener para notificar cambios de fecha
 
-    // Constructor que inicializa la vista del control personalizado
+    private CustomView customView;  // Vista personalizada para el dibujo del calendario
+
     public FechaSelector(Context context, AttributeSet attrs) {
         super(context, attrs);
+        setOrientation(VERTICAL);  // Asegurar que la vista se organiza verticalmente
         inicializarVista(context);  // Llamar al método para inflar la vista
     }
 
@@ -37,6 +42,10 @@ public class FechaSelector extends LinearLayout {
         spinnerMes = findViewById(R.id.spinnerMes);
         spinnerAnio = findViewById(R.id.spinnerAnio);
         textViewFecha = findViewById(R.id.textViewFecha);  // Inicializar TextView para mostrar la fecha
+
+        // Crear el CustomView y agregarlo al LinearLayout
+        customView = new CustomView(context);
+        this.addView(customView);  // Agregar el CustomView a este LinearLayout
 
         // Configurar los spinners para mes y año
         configurarSpinnerMesAnio(context);
@@ -107,7 +116,6 @@ public class FechaSelector extends LinearLayout {
         spinnerAnio.setAdapter(adapterAnios);  // Asignar el adaptador al spinner de año
     }
 
-    // Notifica un cambio en la fecha (mes o año)
     private void notificarCambio() {
         if (fechaChangeListener != null) {
             int mesSeleccionado = spinnerMes.getSelectedItemPosition();  // Obtener el mes seleccionado
@@ -117,43 +125,44 @@ public class FechaSelector extends LinearLayout {
             // Actualizar el TextView con la fecha seleccionada
             String fechaSeleccionada = getMesNombre(mesSeleccionado) + " " + anioSeleccionado;
             textViewFecha.setText(fechaSeleccionada);  // Mostrar la fecha en el TextView
+
+            customView.invalidate();  // Esto forzará a llamar a onDraw() del CustomView para redibujar el calendario
         }
     }
 
-    // Devuelve el nombre del mes a partir del índice
+    // Método para obtener el nombre del mes a partir del índice
     private String getMesNombre(int mes) {
         String[] meses = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
                 "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
         return meses[mes];  // Retorna el nombre del mes
     }
 
-    // Métodos para cambiar el mes y el año programáticamente
-    public void setMes(int mes) {
-        if (mes >= 0 && mes <= 11) {
-            spinnerMes.setSelection(mes);  // Cambiar la selección del spinner de mes
-        }
-    }
-
-    public void setAnio(int anio) {
-        ArrayAdapter<String> adapter = (ArrayAdapter<String>) spinnerAnio.getAdapter();
-        int posicion = adapter.getPosition(String.valueOf(anio));  // Obtener la posición del año
-        if (posicion >= 0) {
-            spinnerAnio.setSelection(posicion);  // Cambiar la selección del spinner de año
-        }
-    }
-
-    // Obtener el mes seleccionado
-    public int getMes() {
-        return spinnerMes.getSelectedItemPosition();  // Retorna la posición seleccionada del spinner de mes
-    }
-
-    // Obtener el año seleccionado
-    public int getAnio() {
-        return Integer.parseInt(spinnerAnio.getSelectedItem().toString());  // Retorna el año seleccionado
-    }
-
     // Asignar el listener para cambios de fecha
     public void setOnFechaChangeListener(OnFechaChangeListener listener) {
         this.fechaChangeListener = listener;  // Asigna el listener para notificar cambios
+    }
+
+    // Clase interna para manejar el dibujo del calendario
+    private class CustomView extends View {
+        public CustomView(Context context) {
+            super(context);
+        }
+
+        @Override
+        protected void onDraw(Canvas canvas) {
+            super.onDraw(canvas);
+
+            // Crear un objeto Paint para definir cómo se va a dibujar
+            Paint paint = new Paint();
+            paint.setColor(Color.RED);  // Establecer el color del texto
+            paint.setTextSize(50);  // Tamaño de fuente grande para asegurar que se vea
+
+            // Dibujar un texto en las coordenadas (100, 100)
+            canvas.drawText("Fecha Seleccionada:", 100, 100, paint);
+
+            // Añadir más elementos gráficos como líneas, círculos, etc.
+            paint.setColor(Color.BLUE);  // Cambiar color para dibujar otras cosas
+            canvas.drawCircle(300, 300, 100, paint);  // Dibujar un círculo azul en la posición (300, 300)
+        }
     }
 }

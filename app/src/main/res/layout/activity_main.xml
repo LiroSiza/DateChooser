@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,9 +10,8 @@
     <com.example.datechooser.FechaSelector
         android:id="@+id/fechaSelector"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:mesSeleccionado="5"
-        app:anioSeleccionado="2024"
-        android:layout_marginTop="50dp"/>
+        app:anioSeleccionado="2024"/>
 
-</LinearLayout>
+</RelativeLayout>

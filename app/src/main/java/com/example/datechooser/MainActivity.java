@@ -23,8 +23,5 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, mensaje, Toast.LENGTH_SHORT).show();
         });
 
-        // Establecer valores iniciales
-        fechaSelector.setMes(0); // Enero
-        fechaSelector.setAnio(2024);
     }
 }
