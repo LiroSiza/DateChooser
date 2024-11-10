@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">DateChooser</string>
+    <string name="prompt_mes">Seleccione el mes</string>
+    <string name="prompt_anio">Seleccione el año</string>
 </resources>
