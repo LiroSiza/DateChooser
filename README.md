@@ -9,6 +9,9 @@
 - Cambio de mes y año mediante `Spinner` y `NumberPicker`.
 - Rango de fechas limitado hasta 50 años mas desde el año actual.
 
+## Imágen de la aplicación
+![Vista de inicio](images/date_chooser.jpg)
+
 ## Instalación
 
 1. Copia las clases `FechaSelector` y `CalendarioView` en tu proyecto.
