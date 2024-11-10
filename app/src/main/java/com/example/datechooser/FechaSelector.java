@@ -37,7 +37,7 @@ public class FechaSelector extends LinearLayout {
         spinnerMes = findViewById(R.id.spinnerMes);
         numberPickerAnio = findViewById(R.id.numberPickerAnio);
         textViewFecha = findViewById(R.id.textViewFecha);
-        calendarioView = findViewById(R.id.calendarioView);  // Asegúrate de tener el CalendarioView en tu layout
+        calendarioView = findViewById(R.id.calendarioView);
 
         // Configurar los elementos del calendario y otros controles
         configurarSpinnerMes(context);
@@ -64,7 +64,6 @@ public class FechaSelector extends LinearLayout {
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
-                // No hacer nada
             }
         });
 
@@ -102,7 +101,7 @@ public class FechaSelector extends LinearLayout {
     private void configurarNumberPickerAnio() {
         int anioActual = Calendar.getInstance().get(Calendar.YEAR);
         numberPickerAnio.setMinValue(1900);
-        numberPickerAnio.setMaxValue(anioActual);
+        numberPickerAnio.setMaxValue(anioActual+50);
         numberPickerAnio.setValue(anioActual);
     }
 

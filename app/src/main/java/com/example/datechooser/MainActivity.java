@@ -22,7 +22,5 @@ public class MainActivity extends AppCompatActivity {
             //String mensaje = "Fecha seleccionada: " + (mes + 1) + "/" + anio;
             //Toast.makeText(MainActivity.this, mensaje, Toast.LENGTH_SHORT).show();
         });
-
-
     }
 }
