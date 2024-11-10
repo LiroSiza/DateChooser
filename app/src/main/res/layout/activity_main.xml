@@ -8,8 +8,9 @@
 
     <com.example.datechooser.FechaSelector
         android:id="@+id/fechaSelector"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:mesInicial="5"
-        app:anioInicial="2023" />
+        app:mesSeleccionado="5"
+        app:anioSeleccionado="2024"/>
+
 </LinearLayout>

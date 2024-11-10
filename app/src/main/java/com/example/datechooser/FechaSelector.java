@@ -22,6 +22,22 @@ public class FechaSelector extends LinearLayout {
     public FechaSelector(Context context, AttributeSet attrs) {
         super(context, attrs);
         inicializarVista(context);
+
+        // Leer atributos desde XML
+        if (attrs != null) {
+            // Obtener valores de los atributos personalizados
+            String namespace = "http://schemas.android.com/apk/res/com.example.datechooser";
+            int mes = attrs.getAttributeIntValue(namespace, "mesSeleccionado", -1);
+            int anio = attrs.getAttributeIntValue(namespace, "anioSeleccionado", -1);
+
+            // Establecer los valores iniciales si son válidos
+            if (mes != -1) {
+                setMes(mes);
+            }
+            if (anio != -1) {
+                setAnio(anio);
+            }
+        }
     }
 
     private void inicializarVista(Context context) {

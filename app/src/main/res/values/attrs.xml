@@ -1,6 +1,6 @@
 <resources>
     <declare-styleable name="FechaSelector">
-        <attr name="mesInicial" format="integer" />
-        <attr name="anioInicial" format="integer" />
+        <attr name="mesSeleccionado" format="integer"/>
+        <attr name="anioSeleccionado" format="integer"/>
     </declare-styleable>
 </resources>
