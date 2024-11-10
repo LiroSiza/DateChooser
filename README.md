@@ -10,7 +10,7 @@
 - Rango de fechas limitado hasta 50 años mas desde el año actual.
 
 ## Imágen de la aplicación
-![Vista de inicio](images/dateChooser.jpg)
+![Vista de inicio](images/DateChooser.jpg)
 
 ## Instalación
 
