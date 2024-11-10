@@ -33,11 +33,21 @@
             android:layout_marginRight="20sp"
             android:prompt="@string/prompt_mes"/>
 
-        <Spinner
-            android:id="@+id/spinnerAnio"
+        <NumberPicker
+            android:id="@+id/numberPickerAnio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:spinnerMode="dropdown"
-            android:prompt="@string/prompt_anio" />
+            android:layout_marginLeft="20sp"
+            android:layout_marginRight="20sp"
+            android:orientation="vertical"
+            android:descendantFocusability="blocksDescendants" />
+
+
     </LinearLayout>
+    <com.example.datechooser.CalendarioView
+        android:id="@+id/calendarioView"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginTop="16dp" />
+
 </LinearLayout>

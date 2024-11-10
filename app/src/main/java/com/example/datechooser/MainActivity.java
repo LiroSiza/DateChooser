@@ -19,9 +19,10 @@ public class MainActivity extends AppCompatActivity {
 
         // Listener para cambios en la fecha
         fechaSelector.setOnFechaChangeListener((mes, anio) -> {
-            String mensaje = "Fecha seleccionada: " + (mes + 1) + "/" + anio;
-            Toast.makeText(MainActivity.this, mensaje, Toast.LENGTH_SHORT).show();
+            //String mensaje = "Fecha seleccionada: " + (mes + 1) + "/" + anio;
+            //Toast.makeText(MainActivity.this, mensaje, Toast.LENGTH_SHORT).show();
         });
+
 
     }
 }
