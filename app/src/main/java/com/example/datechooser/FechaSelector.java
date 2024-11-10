@@ -4,10 +4,12 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -17,27 +19,12 @@ public class FechaSelector extends LinearLayout {
 
     private Spinner spinnerMes;
     private Spinner spinnerAnio;
+    private TextView textViewFecha;  // Referencia al TextView
     private OnFechaChangeListener fechaChangeListener;
 
     public FechaSelector(Context context, AttributeSet attrs) {
         super(context, attrs);
         inicializarVista(context);
-
-        // Leer atributos desde XML
-        if (attrs != null) {
-            // Obtener valores de los atributos personalizados
-            String namespace = "http://schemas.android.com/apk/res/com.example.datechooser";
-            int mes = attrs.getAttributeIntValue(namespace, "mesSeleccionado", -1);
-            int anio = attrs.getAttributeIntValue(namespace, "anioSeleccionado", -1);
-
-            // Establecer los valores iniciales si son válidos
-            if (mes != -1) {
-                setMes(mes);
-            }
-            if (anio != -1) {
-                setAnio(anio);
-            }
-        }
     }
 
     private void inicializarVista(Context context) {
@@ -47,62 +34,71 @@ public class FechaSelector extends LinearLayout {
 
         spinnerMes = findViewById(R.id.spinnerMes);
         spinnerAnio = findViewById(R.id.spinnerAnio);
+        textViewFecha = findViewById(R.id.textViewFecha);  // Inicializar TextView
 
-        configurarSpinnerMes(context);
-        configurarSpinnerAnio(context);
-    }
+        configurarSpinnerMesAnio(context);
 
-    private void configurarSpinnerMes(Context context) {
-        // Lista de meses
-        String[] meses = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-                "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
-
-        ArrayAdapter<String> adapterMeses = new ArrayAdapter<>(context,
-                android.R.layout.simple_spinner_item, meses);
-        adapterMeses.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spinnerMes.setAdapter(adapterMeses);
-
-        // Listener para detectar cambios en el mes
+        // Agregar listeners para los Spinners
         spinnerMes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                notificarCambio();
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                notificarCambio();  // Actualizar la fecha cuando se cambia el mes
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // No hacer nada
+            }
+        });
+
+        spinnerAnio.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                notificarCambio();  // Actualizar la fecha cuando se cambia el año
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
                 // No hacer nada
             }
         });
     }
 
-    private void configurarSpinnerAnio(Context context) {
-        // Generar una lista de años (ejemplo: de 1900 al año actual)
+    private void configurarSpinnerMesAnio(Context context) {
+        // Configurar Spinner para el Mes
+        String[] meses = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+                "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
+
+        ArrayAdapter<String> adapterMeses = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, meses) {
+            @Override
+            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                TextView view = (TextView) super.getDropDownView(position, convertView, parent);
+                // Cambiar fondo de la lista desplegable a blanco
+                view.setBackgroundResource(R.drawable.spinner_background);
+                return view;
+            }
+        };
+        adapterMeses.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerMes.setAdapter(adapterMeses);
+
+        // Configurar Spinner para el Año
         List<String> anios = new ArrayList<>();
         int anioActual = Calendar.getInstance().get(Calendar.YEAR);
         for (int i = anioActual; i >= 1900; i--) {
             anios.add(String.valueOf(i));
         }
 
-        ArrayAdapter<String> adapterAnios = new ArrayAdapter<>(context,
-                android.R.layout.simple_spinner_item, anios);
+        ArrayAdapter<String> adapterAnios = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, anios) {
+            @Override
+            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                TextView view = (TextView) super.getDropDownView(position, convertView, parent);
+                // Cambiar fondo de la lista desplegable a blanco
+                view.setBackgroundResource(R.drawable.spinner_background);
+                return view;
+            }
+        };
         adapterAnios.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         spinnerAnio.setAdapter(adapterAnios);
-
-        // Listener para detectar cambios en el año
-        spinnerAnio.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                notificarCambio();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // No hacer nada
-            }
-        });
     }
 
     // Método para notificar un cambio en la fecha
@@ -111,7 +107,18 @@ public class FechaSelector extends LinearLayout {
             int mesSeleccionado = spinnerMes.getSelectedItemPosition();
             int anioSeleccionado = Integer.parseInt(spinnerAnio.getSelectedItem().toString());
             fechaChangeListener.onFechaChanged(mesSeleccionado, anioSeleccionado);
+
+            // Actualizar el TextView con la fecha seleccionada
+            String fechaSeleccionada = getMesNombre(mesSeleccionado) + " " + anioSeleccionado;
+            textViewFecha.setText(fechaSeleccionada);  // Actualizar TextView
         }
+    }
+
+    // Método para obtener el nombre del mes
+    private String getMesNombre(int mes) {
+        String[] meses = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+                "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
+        return meses[mes];
     }
 
     // Métodos set para cambiar el mes y el año programáticamente
@@ -137,11 +144,6 @@ public class FechaSelector extends LinearLayout {
     // Método para obtener el año seleccionado
     public int getAnio() {
         return Integer.parseInt(spinnerAnio.getSelectedItem().toString());
-    }
-
-    // Interfaz para el listener de cambios
-    public interface OnFechaChangeListener {
-        void onFechaChanged(int mes, int anio);
     }
 
     // Método para asignar el listener

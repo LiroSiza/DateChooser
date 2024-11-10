@@ -1,18 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp"
+    android:background="@color/white">
 
-    <Spinner
-        android:id="@+id/spinnerMes"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/textViewFecha"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:prompt="@string/prompt_mes" />
+        android:text="Fecha seleccionada"
+        android:textSize="22sp"
+        android:fontFamily="@font/ibm_plexdans_medium"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+    />
 
-    <Spinner
-        android:id="@+id/spinnerAnio"
-        android:layout_width="match_parent"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:prompt="@string/prompt_anio" />
+        android:orientation="horizontal"
+        android:layout_marginTop="40dp"
+        android:gravity="center">
+
+        <Spinner
+            android:id="@+id/spinnerMes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dropdown"
+            android:layout_marginRight="20sp"
+            android:prompt="@string/prompt_mes"/>
+
+        <Spinner
+            android:id="@+id/spinnerAnio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dropdown"
+            android:prompt="@string/prompt_anio" />
+    </LinearLayout>
 </LinearLayout>
